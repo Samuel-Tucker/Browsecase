@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Browsecase</title>
+  <desc id="desc">Two chain links dropping into a collection tray</desc>
+  <defs>
+    <linearGradient id="bg" x1="18" y1="12" x2="110" y2="118" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7476F7"/>
+      <stop offset="1" stop-color="#4446C8"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="120" height="120" rx="29" fill="url(#bg)"/>
+  <g transform="rotate(-35 64 49)" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="28" y="28" width="48" height="25" rx="12.5"/>
+    <rect x="53" y="45" width="48" height="25" rx="12.5"/>
+    <path d="M55 45h17"/>
+  </g>
+  <path d="M64 72v15m-7-7 7 7 7-7" fill="none" stroke="#FFD37A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M25 88h22l7 8h20l7-8h22v18a8 8 0 0 1-8 8H33a8 8 0 0 1-8-8V88Z" fill="#FFD37A" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>
+</svg>

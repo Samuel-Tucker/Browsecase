@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Browsecase",
+  "version": "1.2.0",
+  "description": "Capture open tabs, keep local collections, export backups, and restore them later.",
+  "minimum_chrome_version": "114",
+  "permissions": ["sidePanel", "storage", "tabs"],
+  "optional_permissions": ["downloads"],
+  "incognito": "not_allowed",
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "action": {
+    "default_title": "Open Browsecase",
+    "default_icon": {
+      "16": "assets/icon-16.png",
+      "32": "assets/icon-32.png",
+      "48": "assets/icon-48.png",
+      "128": "assets/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icon-16.png",
+    "32": "assets/icon-32.png",
+    "48": "assets/icon-48.png",
+    "128": "assets/icon-128.png"
+  }
+}

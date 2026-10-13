@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Browsecase</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body class="capture-active">
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand">
+        <img src="assets/logo.svg" width="42" height="42" alt="">
+        <div><h1>Browsecase</h1><p id="storage-summary">Local tab archive</p></div>
+      </div>
+    </header>
+
+    <nav class="view-tabs" role="tablist" aria-label="Main views">
+      <button id="capture-tab" class="view-tab is-active" type="button" role="tab" data-view="capture" aria-selected="true" aria-controls="capture-view">Capture</button>
+      <button id="collections-tab" class="view-tab" type="button" role="tab" data-view="collections" aria-selected="false" aria-controls="collections-view" tabindex="-1">Collections <span id="collection-count" class="count-badge">0</span></button>
+    </nav>
+
+    <main>
+      <section id="capture-view" class="view" role="tabpanel" aria-labelledby="capture-tab">
+        <div class="section-intro"><div><p class="eyebrow">Open right now</p><h2 id="capture-heading" tabindex="-1">Pack your tabs</h2></div><button id="refresh-tabs" class="icon-button" type="button" aria-label="Refresh open tabs" title="Refresh open tabs"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.34 5.66M20 5v6h-6"/></svg></button></div>
+        <div class="capture-card">
+          <div class="scope-control" role="group" aria-label="Tabs to capture">
+            <button class="scope-button is-active" type="button" data-scope="all" aria-pressed="true">All windows</button>
+            <button class="scope-button" type="button" data-scope="current" aria-pressed="false">This window</button>
+          </div>
+          <p id="tab-summary" class="summary-line" role="status" aria-live="polite">Looking for open tabs…</p>
+          <label class="field-label" for="collection-name">Collection name</label>
+          <input id="collection-name" class="text-input" type="text" maxlength="100" autocomplete="off" placeholder="e.g. Helium research">
+          <div class="filter-row"><label class="search-field" for="tab-filter"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="tab-filter" type="search" placeholder="Filter open tabs" autocomplete="off" aria-label="Filter open tabs"></label><button id="toggle-all-tabs" class="text-button" type="button">Clear all open tabs</button></div>
+        </div>
+        <div id="capture-empty" class="empty-state" hidden><div class="empty-icon">↗</div><h3>No tabs found</h3><p>Open a web page, then refresh this list.</p></div>
+        <div id="tab-list" class="item-list" role="list" aria-label="Open tabs"></div>
+        <div class="sticky-action"><div class="selection-summary"><strong id="selected-count">0 selected</strong><span>Saved locally + optional HTML download</span></div><button id="save-collection" class="primary-button" type="button" disabled>Save &amp; download</button><p class="optional-download-note">Optional Downloads permission lets Chrome report completion; declining still starts the browser download fallback.</p></div>
+      </section>
+
+      <section id="collections-view" class="view" role="tabpanel" aria-labelledby="collections-tab" hidden>
+        <div id="collections-list-screen">
+          <div class="section-intro"><div><p class="eyebrow">Your local library</p><h2 id="collections-heading" tabindex="-1">Collections</h2></div></div>
+          <aside id="pro-card" class="pro-card" aria-labelledby="pro-card-title" aria-describedby="pro-card-body pro-card-footnote" data-pro-state="accountless">
+            <div class="pro-card-topline"><span id="pro-card-badge" class="pro-badge" role="status">Optional Pro</span><span class="pro-card-mark" aria-hidden="true">✦</span></div>
+            <h3 id="pro-card-title">Cloud protection, when you choose it</h3>
+            <p id="pro-card-body">Your collections stay local and keep working. Existing collections are not uploaded automatically.</p>
+            <p id="pro-card-footnote" class="pro-card-footnote">Cloud protection setup will be an explicit opt-in.</p>
+            <button id="pro-card-cta" class="pro-card-cta" type="button" disabled aria-disabled="true">Pro setup coming soon</button>
+          </aside>
+          <div class="backup-actions" aria-label="Backup actions">
+            <button id="export-backup" class="secondary-button" type="button">Export all (.tabpack.json)</button>
+            <button id="import-backup-button" class="secondary-button" type="button">Import backup</button>
+            <input id="import-backup" type="file" accept="application/json,.json,.tabpack.json" hidden>
+          </div>
+          <p class="backup-note">Exports can contain sensitive URL parameters. Import adds collections; it never replaces existing ones. Optional Downloads permission lets Chrome report completion.</p>
+          <label class="search-field collection-search" for="collection-filter"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="collection-filter" type="search" placeholder="Search collections" autocomplete="off" aria-label="Search collections"></label>
+          <div id="collections-empty" class="empty-state" hidden><img src="assets/logo.svg" width="58" height="58" alt=""><h3>No collections yet</h3><p>Capture your open tabs and they’ll stay organised here.</p><button id="empty-capture-button" class="secondary-button" type="button">Capture open tabs</button></div>
+          <div id="collection-list" class="collection-list" role="list"></div>
+        </div>
+        <div id="collection-detail-screen" hidden>
+          <button id="detail-back" class="back-button" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>All collections</button>
+          <div class="detail-heading"><div class="folder-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7.5h7l2 2h9v9.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7.5Z"/></svg></div><div><p id="detail-date" class="eyebrow"></p><h2 id="detail-title" tabindex="-1"></h2><p id="detail-meta" class="detail-meta"></p></div></div>
+          <div class="detail-actions"><button id="detail-open-all" class="primary-button" type="button">Open all</button><button id="detail-export" class="secondary-button" type="button">Export HTML</button></div>
+          <p class="backup-note">Restore opens a new window for each saved source window. Chrome tab groups are not restored.</p>
+          <div class="manage-row"><button id="detail-rename" class="text-button" type="button">Rename</button><span aria-hidden="true">·</span><button id="detail-delete" class="text-button danger" type="button">Delete</button></div>
+          <label class="search-field detail-search" for="detail-filter"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="detail-filter" type="search" placeholder="Find a saved link" autocomplete="off" aria-label="Find a saved link"></label>
+          <div id="detail-link-list" class="item-list detail-list" role="list"></div>
+        </div>
+      </section>
+    </main>
+    <section id="privacy-disclosure" class="privacy-disclosure" aria-label="Privacy and backup information"><strong>Local-only.</strong> Browsecase reads titles and URLs from all open tabs in your chosen scope so you can select what to save. Data stays in this Chrome profile. Exports may include sensitive URL parameters; uninstalling clears local storage. No account, server, or analytics in this free build.</section>
+  </div>
+  <section id="onboarding" class="onboarding" role="dialog" aria-modal="true" aria-labelledby="onboarding-title" tabindex="-1" hidden><h2 id="onboarding-title">Welcome to Browsecase</h2><p>Save tab collections locally, then export a portable `.tabpack.json` backup when you need one. This stable legacy-compatible format keeps existing backups importable. Saved internal or unsupported URLs are shown as reference-only.</p><button id="dismiss-onboarding" class="primary-button" type="button">Got it</button></section>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script type="module" src="sidepanel.js"></script>
+</body>
+</html>
